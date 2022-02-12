@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: url(${backgroundPng}) no-repeat;
-    color: #F2F2F2
+    background: ${props => props.theme.background};
+    color: ${props => props.theme.text};
   }
 `

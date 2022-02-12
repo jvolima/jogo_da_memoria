@@ -1,4 +1,4 @@
-# Jogo da memória do Harry Potter
+# Jogo da memória do Pokémon
 
 ## Tecnologias
 - React
