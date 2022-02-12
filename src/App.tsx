@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { DefaultTheme, ThemeProvider } from "styled-components"
-import { Card } from "./components/Card"
+import { Cards } from "./components/Cards"
 import { Options } from "./components/Options"
 import { Title } from "./components/Title"
 import dark from "./styles/themes/dark"
@@ -19,7 +19,7 @@ function App() {
     <ThemeProvider theme={chosedTheme}>
       <Title />
       <Options toggleTheme={handleSwitchChange} />
-      <Card />
+      <Cards />
       <GlobalStyle />
     </ThemeProvider>
   )

@@ -1,8 +1,14 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Container } from "./styles"
 
-export function Card() {
-  const [isTurned, setIsTurned] = useState(false)
+interface CardProps {
+  linkImg: string;
+}
+
+export function Card({ linkImg }: CardProps) {
+  const [isTurned, setIsTurned] = useState(true)
+
+  const card = useRef<HTMLDivElement>(null)
 
   function handleClickCard() {
     setIsTurned(!isTurned)
@@ -12,8 +18,8 @@ export function Card() {
     <>
       {
         isTurned == false ?
-        <Container onClick={handleClickCard}>
-          <img src="http://hp-api.herokuapp.com/images/harry.jpg" alt="img" />
+        <Container onClick={handleClickCard} ref={card}>
+          <img src={linkImg} alt="img" className="img" />
         </Container> 
         : 
         <Container onClick={handleClickCard}>

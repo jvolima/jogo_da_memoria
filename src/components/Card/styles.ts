@@ -12,7 +12,7 @@ export const Container = styled.div`
   justify-content: center;
 
   img {
-    width: 6rem;
-    height: 7rem;
+    width: 7rem;
+    height: 6rem;
   }
 `
