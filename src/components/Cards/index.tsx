@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { Card } from "../Card";
 import { Container } from "./styles";
+import { pokeImages } from "../../services/images"
 
 interface CardInfos {
   linkImg: string;
@@ -8,27 +9,16 @@ interface CardInfos {
 }
 
 export function Cards() {
-
-  const pokeImages = [
-    "https://gamepress.gg/pokemonmasters/sites/pokemonmasters/files/styles/300h/public/2020-01/pm0376_00_metagross_256.ktx_.png?itok=sapL6eIc",
-    "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
-    "https://assets.pokemon.com/assets/cms2/img/pokedex/full/448.png"
-  ]
-
   const [cards, setCards] = useState<CardInfos[]>([])
   const [chosenCards, setChosenCards] = useState<CardInfos[]>([])
   const [matchedCards, setMatchedCards] = useState<CardInfos[]>([])
 
   useEffect(() => {
-    pokeImages.map((img) => {
+    pokeImages.sort(() => Math.random() - 0.5).map((img) => {
       const newCards = [
         {
           id: Math.random().toString(),
           linkImg: img,
-        },
-        {
-          id: Math.random().toString(),
-          linkImg: img
         }
       ] 
 
@@ -40,8 +30,32 @@ export function Cards() {
 
   function handleClickCard(id: string, linkImg: string) {
     const card = cards.find((card) => card.id === id) as CardInfos
-    console.log(card)
-    setChosenCards([card])
+    if(chosenCards.length < 1) {
+      setChosenCards(oldProps => [...oldProps, card]);
+      return;
+
+    } else if(chosenCards.length < 2) {
+      setChosenCards(oldProps => [...oldProps, card]);
+      const newCards = [...chosenCards, card];
+      const openCards = newCards.filter((card) => card.linkImg === linkImg)
+
+      if(openCards.length == 2) {
+        const cardsMatched = [...matchedCards, ...openCards]
+        setMatchedCards(oldProps => [...oldProps, ...openCards])
+        setChosenCards([])
+        if(cardsMatched.length === pokeImages.length) {
+          setTimeout(() => {
+            alert("VITORIA")
+            setMatchedCards([])
+            setChosenCards([])
+          }, 300)          
+        }
+      } else {
+        setTimeout(() => {
+          setChosenCards([])
+        }, 600)  
+      }
+    } 
   }
 
   function isChosen(id: string) {
