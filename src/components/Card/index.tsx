@@ -6,9 +6,7 @@ interface CardProps {
 }
 
 export function Card({ linkImg }: CardProps) {
-  const [isTurned, setIsTurned] = useState(true)
-
-  const card = useRef<HTMLDivElement>(null)
+  const [isTurned, setIsTurned] = useState(false)
 
   function handleClickCard() {
     setIsTurned(!isTurned)
@@ -17,8 +15,8 @@ export function Card({ linkImg }: CardProps) {
   return (
     <>
       {
-        isTurned == false ?
-        <Container onClick={handleClickCard} ref={card}>
+        isTurned == true ?
+        <Container onClick={handleClickCard}>
           <img src={linkImg} alt="img" className="img" />
         </Container> 
         : 
