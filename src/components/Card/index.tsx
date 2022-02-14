@@ -3,24 +3,22 @@ import { Container } from "./styles"
 
 interface CardProps {
   linkImg: string;
+  id: string;
+  isChosen: (id: string) => boolean;
+  handleClickCard: (id: string, linkImg: string) => void;
+  isMatched: (id: string) => boolean;
 }
 
-export function Card({ linkImg }: CardProps) {
-  const [isTurned, setIsTurned] = useState(false)
-
-  function handleClickCard() {
-    setIsTurned(!isTurned)
-  }
-
+export function Card({ id, linkImg, isChosen, handleClickCard, isMatched }: CardProps) {
   return (
     <>
       {
-        isTurned == true ?
-        <Container onClick={handleClickCard}>
+        isChosen(id) || isMatched(id) == true ?
+        <Container onClick={() => handleClickCard(id, linkImg)}>
           <img src={linkImg} alt="img" className="img" />
         </Container> 
         : 
-        <Container onClick={handleClickCard}>
+        <Container onClick={() => handleClickCard(id, linkImg)}>
         </Container>
       }
     </>

@@ -16,6 +16,8 @@ export function Cards() {
   ]
 
   const [cards, setCards] = useState<CardInfos[]>([])
+  const [chosenCards, setChosenCards] = useState<CardInfos[]>([])
+  const [matchedCards, setMatchedCards] = useState<CardInfos[]>([])
 
   useEffect(() => {
     pokeImages.map((img) => {
@@ -36,11 +38,39 @@ export function Cards() {
     })
   }, [])
 
+  function handleClickCard(id: string, linkImg: string) {
+    const card = cards.find((card) => card.id === id) as CardInfos
+    console.log(card)
+    setChosenCards([card])
+  }
+
+  function isChosen(id: string) {
+    const card = chosenCards.find((card) => card.id === id);
+    if(!card) {
+      return false;
+    }
+    return true;
+  }
+
+  function isMatched(id: string) {
+    const card = matchedCards.find((card) => card.id === id);
+    if(!card) {
+      return false;
+    }
+    return true;
+  }
+
   return (
     <Container> 
       {
-        cards.sort(() => Math.random() - 0.5).map((card) => (
-          <Card linkImg={card.linkImg} key={card.id} />
+        cards.map((card) => (
+          <Card
+            linkImg={card.linkImg} 
+            id={card.id} key={card.id} 
+            isChosen={() => isChosen(card.id)} 
+            handleClickCard={() => handleClickCard(card.id, card.linkImg)}
+            isMatched={() => isMatched(card.id)}
+          />
         ))
       }
     </Container>
